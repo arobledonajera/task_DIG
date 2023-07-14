@@ -30,30 +30,30 @@ class Tasks {
         imei: "867162029612603",
         serialNumber: "K9D6215BEB66",
       },
-      {
-        imei: "867162029159696",
-        serialNumber: "K9D4215BEB64",
-      },
-      {
-        imei: "867162029504297",
-        serialNumber: "K9D8215BEB68",
-      },
-      {
-        imei: "867162029498961",
-        serialNumber: "K9D7215BEB67",
-      },
-      {
-        imei: "867162029372125",
-        serialNumber: "K9D5215BEB65",
-      },
-      {
-        imei: "867162029376753",
-        serialNumber: "K9D9215BEB69",
-      },
-      {
-        imei: "863457051738498",
-        serialNumber: "K9DA215BEB6A",
-      }
+      // {
+      //   imei: "867162029159696",
+      //   serialNumber: "K9D4215BEB64",
+      // },
+      // {
+      //   imei: "867162029504297",
+      //   serialNumber: "K9D8215BEB68",
+      // },
+      // {
+      //   imei: "867162029498961",
+      //   serialNumber: "K9D7215BEB67",
+      // },
+      // {
+      //   imei: "867162029372125",
+      //   serialNumber: "K9D5215BEB65",
+      // },
+      // {
+      //   imei: "867162029376753",
+      //   serialNumber: "K9D9215BEB69",
+      // },
+      // {
+      //   imei: "863457051738498",
+      //   serialNumber: "K9DA215BEB6A",
+      // }
     ]
   };
 
@@ -104,12 +104,14 @@ class Tasks {
 
     arrayDevices.data.forEach(gps => {
       const serialNo = this.#sn.find(e => e.imei === gps.IMEI)?.serialNumber;
-      const { ActualDateUTC, Latitude, Longitude, Speed } = gps;
-      const dateTime = ActualDateUTC;
-      gpsRecord.push(this.#createGpsRecord({ serialNo, dateTime, Latitude, Longitude, Speed }));
+      if (serialNo){
+        const { ActualDateUTC, Latitude, Longitude, Speed } = gps;
+        const dateTime = ActualDateUTC;
+        gpsRecord.push(this.#createGpsRecord({ serialNo, dateTime, Latitude, Longitude, Speed }));
+      }      
     });
 
-    return [...gpsRecord];
+    return [...gpsRecord].filter(e => e);
   };
 
   #createGpsRecord = ({ serialNo, dateTime, Latitude, Longitude, Speed }) => {
